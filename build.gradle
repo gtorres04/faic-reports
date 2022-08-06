@@ -99,3 +99,12 @@ pitest {
    timestampedReports = false
    mutators = ['DEFAULTS']
 }
+
+// Add script pre-commit to .git/hooks
+task installLocalGitHook(type: Copy){
+   from new File(rootProject.rootDir, 'scripts/git/pre-commit')
+   into { new File(rootProject.rootDir, '.git/hooks')}
+   fileMode 0775
+}
+
+build.dependsOn installLocalGitHook
