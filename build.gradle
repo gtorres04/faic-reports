@@ -88,14 +88,14 @@ spotless {
       eclipse() // I like eclipse formatting over google
 //      googleJavaFormat('1.11.0').aosp().reflowLongStrings(), this is the other option
    }
+}
 
-   // Mutation Test configuration 
-   pitest {
-      testPlugin = 'junit5'
-      targetClasses = ['com.gtorresoft.*']
-      threads = 4
-      outputFormats = ['HTML']
-      timestampedReports = false
-      mutators = ['DEFAULTS']
-   }
+// Mutation Test configuration 
+pitest {
+   testPlugin = 'junit5'
+   targetClasses = ['com.gtorresoft.*']
+   threads = 4
+   outputFormats = ['HTML']
+   timestampedReports = false
+   mutators = ['DEFAULTS']
 }
