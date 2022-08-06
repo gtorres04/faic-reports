@@ -1,8 +1,22 @@
+buildscript {
+   repositories {
+        jcenter()
+   }
+   configurations.maybeCreate('pitest')
+   dependencies {
+       classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.5'
+       pitest 'org.pitest:pitest-junit5-plugin:0.8'
+   }
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
 	id "com.diffplug.spotless" version '5.16.0'
+        id 'jacoco'
+        id 'info.solidsoft.pitest' version '1.4.5'
+
 }
 
 group = 'com.gtorresoft.faic'
@@ -73,5 +87,15 @@ spotless {
    java {
       eclipse() // I like eclipse formatting over google
 //      googleJavaFormat('1.11.0').aosp().reflowLongStrings(), this is the other option
+   }
+
+   // Mutation Test configuration 
+   pitest {
+      testPlugin = 'junit5'
+      targetClasses = ['com.gtorresoft.*']
+      threads = 4
+      outputFormats = ['HTML']
+      timestampedReports = false
+      mutators = ['DEFAULTS']
    }
 }
