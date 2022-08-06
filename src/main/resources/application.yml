@@ -1,0 +1,10 @@
+google-sheets:
+  data-sources:
+    - id: 'reports'
+      spread-sheets-id: '1dDqFX6qFflfoS3AZpy5skYHBBrH43IMtaFyHkC-QTZE'
+      tab-name: 'Cuotas G1'
+      range: 'A5:Q'
+
+
+
+
