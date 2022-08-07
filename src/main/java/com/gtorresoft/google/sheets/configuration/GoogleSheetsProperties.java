@@ -1,4 +1,4 @@
-package com.gtorresoft.faic.reports.configuration;
+package com.gtorresoft.google.sheets.configuration;
 
 import com.gtorresoft.google.sheets.domain.GoogleSheetsDatasource;
 import java.util.List;
