@@ -1,18 +1,23 @@
 package com.gtorresoft.faic.reports.domain;
 
-import io.github.glytching.junit.extension.random.Random;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.Month;
+import java.util.Map;
+import org.junit.jupiter.api.Test;
 
 class ReportTest {
 
-    @Test
-    void getTotalAmount(@Random Report report) {
-        double result = report.getTotalAmount();
-        Assertions.assertThat(result).isEqualTo(Double.sum(report.getPreviousCapital(), report.getQuotaByMonth().values().stream().mapToDouble(v -> v).sum()));
-    }
+  @Test
+  void getTotalAmount() {
+    Report report =
+        Report.builder().previousCapital(1d).quotaByMonth(Map.of(Month.APRIL, 1d)).build();
+    double result = report.getTotalAmount();
+    assertThat(result)
+        .isEqualTo(
+            Double.sum(
+                report.previousCapital(),
+                report.quotaByMonth().values().stream().mapToDouble(v -> v).sum()));
+  }
 }

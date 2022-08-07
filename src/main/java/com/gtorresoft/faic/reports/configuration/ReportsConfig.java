@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ReportsConfig {
-    @Bean
-    public GoogleSheetsService getGoogleSheetsService(){
-        return new GoogleSheetsServiceImpl();
-    }
+  @Bean
+  public GoogleSheetsService getGoogleSheetsService() {
+    return new GoogleSheetsServiceImpl();
+  }
 }
