@@ -54,7 +54,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// Spotless Configuration
+// Spotless Configuration: https://github.com/diffplug/spotless/blob/main/plugin-gradle/README.md#java
 spotless {
     // optional: limit format enforcement to just the files changed by this feature branch
     // ratchetFrom 'origin/main'
@@ -76,7 +76,6 @@ spotless {
 }
 
 /************** QUALITY *************************/
-test.mustRunAfter jacocoTestCoverageVerification
 
 // JaCoCo Guia https://reflectoring.io/jacoco/
 jacocoTestCoverageVerification {
@@ -85,12 +84,11 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.95
+                minimum = 0.90
             }
         }
     }
 }
-jacocoTestCoverageVerification.mustRunAfter pitest
 
 // Mutation Test configuration
 pitest {
@@ -100,8 +98,8 @@ pitest {
     outputFormats = ['HTML']
     timestampedReports = false
     mutators = ['DEFAULTS']
-    mutationThreshold = 95
-    coverageThreshold = 95
+    mutationThreshold = 90
+    coverageThreshold = 90
 }
 
 // Add script pre-commit to .git/hooks
@@ -111,4 +109,4 @@ task installLocalGitHook(type: Copy) {
     fileMode 0775
 }
 
-build.dependsOn installLocalGitHook
+compileJava.dependsOn(installLocalGitHook, spotlessApply)
