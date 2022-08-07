@@ -49,9 +49,10 @@ public class GeneratorReportsAdapter implements GeneratorReportsPort {
     report.quotaByMonth().keySet().stream()
         .sorted()
         .forEach(
-            month -> tableDefault
-                .addCell(month.name(), ColorConstants.WHITE)
-                .addCell(report.quotaByMonth().get(month).toString(), ColorConstants.WHITE));
+            month ->
+                tableDefault
+                    .addCell(month.name(), ColorConstants.WHITE)
+                    .addCell(report.quotaByMonth().get(month).toString(), ColorConstants.WHITE));
     doc.add(tableDefault.getTable());
     doc.close();
   }
