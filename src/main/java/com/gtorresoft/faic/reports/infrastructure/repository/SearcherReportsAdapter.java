@@ -1,6 +1,7 @@
 package com.gtorresoft.faic.reports.infrastructure.repository;
 
 import com.gtorresoft.faic.reports.domain.Report;
+import com.gtorresoft.faic.reports.domain.SearchReportsException;
 import com.gtorresoft.faic.reports.domain.ports.SearcherReportsPort;
 import com.gtorresoft.faic.reports.infrastructure.repository.mappers.SearcherReportsAdapterMapper;
 import com.gtorresoft.google.sheets.domain.GoogleSheetsDatasource;
@@ -20,9 +21,18 @@ public class SearcherReportsAdapter implements SearcherReportsPort {
 
   @Override
   public List<Report> findReports() {
-    return googleSheetsService.get(googleSheetsDatasourceReports).stream()
+    return getRecordsFromGoogleSheets().stream()
         .filter(Objects::nonNull)
         .map(searcherReportsAdapterMapper::listObjectsToReport)
         .collect(Collectors.toList());
+  }
+
+  private List<List<Object>> getRecordsFromGoogleSheets() {
+    try {
+      return googleSheetsService.get(googleSheetsDatasourceReports);
+    } catch (Exception e) {
+      throw new SearchReportsException(
+          "Error al recuperar los datos desde la hoja de calculo de google", e);
+    }
   }
 }

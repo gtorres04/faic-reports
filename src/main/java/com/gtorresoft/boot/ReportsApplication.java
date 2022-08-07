@@ -1,9 +1,9 @@
-package com.gtorresoft.faic.reports;
+package com.gtorresoft.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.gtorresoft.*")
 public class ReportsApplication {
 
   public static void main(String[] args) {

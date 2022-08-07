@@ -1,10 +1,12 @@
 package com.gtorresoft.faic.reports.infrastructure.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 import com.gtorresoft.faic.reports.domain.Report;
+import com.gtorresoft.faic.reports.domain.SearchReportsException;
 import com.gtorresoft.faic.reports.infrastructure.repository.mappers.SearcherReportsAdapterMapper;
 import com.gtorresoft.google.sheets.domain.GoogleSheetsDatasource;
 import com.gtorresoft.google.sheets.domain.service.GoogleSheetsService;
@@ -59,5 +61,16 @@ class SearcherReportsAdapterTest {
             IntStream.of(values.size()).mapToObj(operand -> report).collect(Collectors.toList()));
     verify(googleSheetsService, times(1)).get(googleSheetsDatasource);
     verify(searcherReportsAdapterMapper, times(values.size())).listObjectsToReport(anyList());
+  }
+
+  @Test
+  void findReports_throwsException() {
+    when(googleSheetsService.get(googleSheetsDatasource)).thenThrow(RuntimeException.class);
+
+    assertThatThrownBy(() -> searcherReportsAdapter.findReports())
+        .isInstanceOf(SearchReportsException.class)
+        .hasMessage("Error al recuperar los datos desde la hoja de calculo de google");
+
+    verify(googleSheetsService, times(1)).get(googleSheetsDatasource);
   }
 }
